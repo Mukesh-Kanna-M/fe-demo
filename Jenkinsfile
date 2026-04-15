@@ -18,7 +18,7 @@ pipeline {
         stage('Upload Build to S3') {
             steps {
                  withCredentials([
-                    aws(credentialsId: 'aws-credential', 
+                    aws(credentialsId: 'aws-credentials', 
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
                 ]) {
@@ -30,7 +30,7 @@ pipeline {
         stage('Invalidate CloudFront Cache') {
             steps {
                  withCredentials([
-                    aws(credentialsId: 'aws-credential', 
+                    aws(credentialsId: 'aws-credentials', 
                         accessKeyVariable: 'AWS_ACCESS_KEY_ID', 
                         secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')
                 ]) {
