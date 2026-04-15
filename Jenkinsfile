@@ -19,31 +19,10 @@ pipeline {
             }
         }
 
-        stage('Check Node Version') {
-            steps {
-                sh '''
-                node -v
-                npm -v
-                '''
-            }
-        }
-
-        stage('Install Dependencies') {
-            steps {
-                sh 'npm ci'
-            }
-        }
-
-        stage('Build React App') {
-            steps {
-                sh 'npm run build'
-            }
-        }
-
         stage('Upload Build to S3') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
-                    sh 'aws s3 sync build/ s3://$S3_BUCKET --delete'
+                    sh 'aws s3 cp index.html s3://$S3_BUCKET'
                 }
             }
         }
