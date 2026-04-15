@@ -40,7 +40,7 @@ pipeline {
             }
         }
 
-        tage('Upload Build to S3') {
+        stage('Upload Build to S3') {
             steps {
                 withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
                     sh 'aws s3 sync build/ s3://$S3_BUCKET --delete'
@@ -61,7 +61,7 @@ pipeline {
         }
     }
 
-    ost {
+    post {
         always {
             echo "Pipeline finished"
         }
