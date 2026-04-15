@@ -21,7 +21,9 @@ pipeline {
 
         stage('Upload Build to S3') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+    // some block
+} {
                     sh 'aws s3 cp index.html s3://$S3_BUCKET'
                 }
             }
@@ -29,7 +31,9 @@ pipeline {
 
         stage('Invalidate CloudFront Cache') {
             steps {
-                withAWS(credentials: 'aws-credentials', region: 'us-east-1') {
+                withCredentials([aws(accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-credentials', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]) {
+    // some block
+} {
                     sh '''
                     aws cloudfront create-invalidation \
                     --distribution-id $CLOUDFRONT_DISTRIBUTION_ID \
